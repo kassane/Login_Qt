@@ -1,0 +1,69 @@
+cmake_minimum_required(VERSION 3.1)
+
+project(Login_Qt VERSION 1.1 LANGUAGES CXX)
+
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+find_package(Qt5 REQUIRED COMPONENTS Core Gui widgets sql)
+
+#Info Message
+#if(CMAKE_COMPILER_IS_GNUCXX STREQUAL )
+#    message(STATUS "GNU GCC ${CMAKE_CXX_COMPILER_VERSION}")
+
+# Set additional project information
+set(COMPANY "FileForums")
+set(COPYRIGHT "Copyright (c) 2018 Kassany. All rights reserved.")
+set(IDENTIFIER "Designer CIUv2")
+
+#Sources
+set(project_sources
+    Code/main.cpp
+    Code/Login.cpp
+    Code/Database.cpp
+    )
+
+#Headers
+set(project_headers
+    Headers/Login.hpp
+    Headers/Database.hpp
+    )
+
+#UI
+set(project_ui Ui/login.ui)
+
+#Resources	
+#set(project_resource ./icons.qrc)
+
+qt5_wrap_cpp(project_sources_moc ${project_headers})
+qt5_wrap_ui(project_ui_wrap ${project_ui})
+qt5_add_resources(project_resources ${project_resource})
+
+add_executable(${PROJECT_NAME} ${OS_BUNDLE}
+    ${project_sources} 
+    ${project_headers}
+    #${project_resources}
+    ${project_sources_moc}
+    ${project_ui_wrap}
+    )
+
+target_link_libraries(${PROJECT_NAME} 
+    PUBLIC 
+    Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Sql)
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR})
+
+add_custom_command(TARGET ${PROJECT_NAME} ${OS_BUNDLE} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Qt5::Sql> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+)
