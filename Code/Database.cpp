@@ -41,7 +41,6 @@ void Database::connect()
     //qry.bindValue(3,_password);
     if(!qry.exec()) qDebug() << "ERROR: " << qry.lastError();
     for(int i = 0; i < qry.next(); i++) {
-        qDebug() << Password() << " == " << qry.value(i+1).toString();
         if(User() != qry.value(i).toString() || Password() != qry.value(i+1).toString())
             qDebug() << "ERROR: Senha e/ou Usuario errado!";
         else qDebug() << "Logado com Sucesso!";
@@ -52,7 +51,7 @@ void Database::connect()
         qry.prepare("INSERT INTO tb_colaboradores (ID, Nome, Usuario, Senha) VALUES (?,?,?,?)");
         qry.bindValue(1,"Matheus");
         qry.bindValue(2,"kassane");
-        qry.bindValue(3,"catarino");
+        qry.bindValue(3,"abc123");
         if(!qry.exec()) qDebug() << "ERROR: " << qry.lastError();
      */
 }
