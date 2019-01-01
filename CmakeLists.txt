@@ -11,14 +11,14 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 REQUIRED COMPONENTS Core Gui widgets sql)
 
-#Info Message
-#if(CMAKE_COMPILER_IS_GNUCXX STREQUAL )
-#    message(STATUS "GNU GCC ${CMAKE_CXX_COMPILER_VERSION}")
+
+
+
 
 # Set additional project information
-set(COMPANY "FileForums")
+
 set(COPYRIGHT "Copyright (c) 2018 Kassany. All rights reserved.")
-set(IDENTIFIER "Designer CIUv2")
+
 
 #Sources
 set(project_sources
